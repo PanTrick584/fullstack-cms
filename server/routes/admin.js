@@ -1,7 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const { getPages, createPages } = require("../controllers/admin")
-router.route('/').get(getPages).post(createPages)
+const {
+    getAllPages,
+    getPage,
+    createPage,
+    updatePage,
+    deletePage } = require("../controllers/pages")
+
+router.route('/').get(getAllPages).post(createPage)
+router.route('/:id').get(getPage).patch(updatePage).delete(deletePage)
 
 module.exports = router;
