@@ -33,7 +33,7 @@ const HomePage = () => {
                 </Link>
             </nav>
             <div>
-                <h1>{data.map((item, id) => <p key={`home-page-header-${id}`}>{item.section}</p>)}</h1>
+                <h1>{data?.map((item, id) => <p key={`home-page-header-${id}`}>{item.section}</p>)}</h1>
             </div>
 
         </>

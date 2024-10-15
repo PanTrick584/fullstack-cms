@@ -4,12 +4,22 @@ export const handleData = async (path, setter, options = {}) => {
         'User-Agent': 'learning app',
     };
 
+    // console.log(body);
+    // console.log(...options);
+
+
     try {
         // Perform the fetch request
-        const response = await fetch(path, {
-            headers: { ...defaultHeaders, ...options.headers },
-            ...options, // Spread other options like method, body, etc.
-        });
+        const response = await fetch(
+            path,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    "Accept": "application/json",
+
+                },
+                ...options
+            });
 
         // Check if the response is successful (status code 200-299)
         if (!response.ok) {
@@ -20,6 +30,7 @@ export const handleData = async (path, setter, options = {}) => {
 
         // Use the setter function to set the data
         if (setter) {
+            console.log(result.data);
             setter(result.data); // Assuming the API response has a `data` field
         }
 
