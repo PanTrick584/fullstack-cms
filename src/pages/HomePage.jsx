@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { handleData } from '../handlers/handlers';
 import "./styles/home-page.scss"
+import { AppContext } from '../context/AppContext';
 
 const HomePage = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true)
     const builDatadPath = "/api/v1/data"
-    const devDataPath = "http://localhost:5000" + builDatadPath
+    const devDataPath = "http://localhost:5000" + builDatadPath;
+    const { userData } = useContext(AppContext);
 
     useEffect(() => {
         fetchData();
