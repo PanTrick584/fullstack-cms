@@ -7,6 +7,7 @@ const getAllPages = async (req, res) => {
         return res.status(201).json({ data: "secret data not for you" })
     }
 
+
     const page = await Page.find({})
 
     if (!page) return;
@@ -15,12 +16,13 @@ const getAllPages = async (req, res) => {
 }
 
 const getPage = async (req, res) => {
-    res.status(201).send("get single page")
+    res.status(201).send("get double page")
+
 }
 
 const createPage = async (req, res) => {
     const page = await Page.create(req.body)
-    res.status(201).json({ data: req.body })
+    res.status(201).json({ data: page })
 }
 
 const updatePage = async (req, res) => {
