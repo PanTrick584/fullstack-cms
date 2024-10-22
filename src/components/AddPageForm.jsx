@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { handleData } from "../handlers/handlers";
 // import fetchData
 
-const AddPageForm = () => {
+const AddPageForm = ({ setPages, addPage }) => {
     const [newPage, setNewPage] = useState(null);
     const [formData, setFormData] = useState({
         title: "",
@@ -13,7 +14,8 @@ const AddPageForm = () => {
     useEffect(() => {
         if (newPage === null) return;
         console.log(newPage);
-        setPagesList(prev => [...prev, newPage])
+        setPages(prev => [...prev, newPage])
+        addPage(false)
         // console.log(pagesList);
     }, [newPage])
 
@@ -23,7 +25,7 @@ const AddPageForm = () => {
         } catch (error) {
             console.log(error);
         } finally {
-            setLoading(false)
+            // setLoading(false)
         }
     };
 
@@ -43,11 +45,12 @@ const AddPageForm = () => {
         }))
     }
 
-    return(
+    return (
         <form onSubmit={(e) => {
             if (!formData.title || !formData.type) return;
 
             e.preventDefault();
+
             fetchData(devAdminPath, setNewPage, { method: "POST", body: JSON.stringify(formData) })
             // setLoading(true)
         }}>

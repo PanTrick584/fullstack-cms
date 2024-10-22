@@ -2,15 +2,8 @@ const PageType = require("../models/PageType");
 
 const getAllPageTypes = async (req, res) => {
     const { type } = req.query;
-    console.log(type);
-    // const pageTypes = await Job.find({ createdBy: req.user.userId }).sort('createdAt')
-    // return res.status(201).json({ jobs, count: jobs.length })
-    // return res.status(201).json({ data: "secret data not for you" })
-    // res.status(201).json({ data: req.body })
     const pageTypes = await PageType.find({ createdBy: type }).sort('createdAt')
-    console.log(pageTypes);
-    res.status(201).json({ pageTypes, count: pageTypes.length })
-    // console.log("basic request");
+    res.status(201).json({ data: pageTypes, count: pageTypes.length })
 }
 
 const getPageType = async (req, res) => {
@@ -23,7 +16,8 @@ const createPageType = async (req, res) => {
     const { title, id } = req.body;
     const pageType = await PageType.create({ title: title, createdBy: id })
 
-    if (!pageType) return;
+    console.log(pageType);
+    // if (!pageType) return;
     res.status(201).json({ data: pageType })
 }
 

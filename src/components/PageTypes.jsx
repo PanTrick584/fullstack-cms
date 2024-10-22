@@ -3,18 +3,22 @@ import { handleData } from '../handlers/handlers'
 import PageTypeForm from './PageTypeForm'
 
 
-const AddPageType = ({ data }) => {
+const PageTypes = ({ data, setType }) => {
     const [showForm, setShowForm] = useState(false)
     const [typesData, setTypesData] = useState([])
     const [loading, setLoading] = useState(true)
+    const [clickedType, setClickedType] = useState()
 
-    const buildAdminPath = "/page-type"
-    const pageTypePath = "http://localhost:5000" + buildAdminPath
+    const pageTypePath = `http://localhost:5000/page-type?type=${data._id}`;
 
     useEffect(() => {
-        fetchData(pageTypePath + '?type=' + data._id, setTypesData)
+        fetchData(pageTypePath, setTypesData)
         setLoading(false)
     }, [])
+
+    useEffect(() => {
+        setType(clickedType)
+    }, [clickedType])
 
     // const pageTypePath = devAdminPath + '?type=pageType'
     // console.log(data);
@@ -39,11 +43,11 @@ const AddPageType = ({ data }) => {
     return (
         <div className='page-type'>
 
-            {!loading && typesData ? typesData.map((item) => <p>{item.title}</p>) : "Loading..."}
+            {!loading ? typesData.length ? typesData.map((item, id) => <p onClick={() => setClickedType({ id, data: item })}>{item.title}</p>) : "There are no page types, click button to create..." : "Loading..."}
             {!showForm && <button onClick={() => setShowForm(true)}>add new type</button>}
-            {showForm && <PageTypeForm pageData={data._id} />}
+            {showForm && <PageTypeForm pageData={data._id} setTypes={setTypesData} />}
         </div>
     )
 }
 
-export default AddPageType
+export default PageTypes

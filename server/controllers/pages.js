@@ -21,6 +21,7 @@ const getPage = async (req, res) => {
 }
 
 const createPage = async (req, res) => {
+    console.log(req.body);
     const page = await Page.create(req.body)
     res.status(201).json({ data: page })
 }

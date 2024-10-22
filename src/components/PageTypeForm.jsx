@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { handleData } from "../handlers/handlers";
 
-const PageTypeForm = ({ pageData }) => {
+const PageTypeForm = ({ pageData, setTypes }) => {
     const [newType, setNewType] = useState(null);
     const [formData, setFormData] = useState({
         title: "",
-        id: pageData,
+        id: String(pageData),
     });
 
-    console.log(pageData);
+    useEffect(() => {
+        if (!newType) return;
+        setTypes(prev => [...prev, newType])
+    }, [newType])
 
-    const buildAdminPath = "/admin/page-type/"
-    const pageTypePath = "http://localhost:5000" + buildAdminPath
+    const pageTypePath = "http://localhost:5000/page-type";
 
     const fetchData = async (path, setter, body = {}) => {
         try {
@@ -19,7 +21,7 @@ const PageTypeForm = ({ pageData }) => {
         } catch (error) {
             console.log(error);
         } finally {
-            setLoading(false)
+            // setLoading(false)
         }
     };
 
@@ -32,11 +34,15 @@ const PageTypeForm = ({ pageData }) => {
     }
 
     console.log(newType);
+    console.log(pageData);
+    console.log(typeof pageData);
 
     return (
         <form onSubmit={(e) => {
             if (!formData.title || !formData.id) return;
 
+            console.log(formData.title);
+            console.log(formData.id);
             e.preventDefault();
             fetchData(pageTypePath, setNewType, { method: "POST", body: JSON.stringify(formData) })
         }}>
@@ -47,7 +53,7 @@ const PageTypeForm = ({ pageData }) => {
                 value={formData.title}
                 onChange={handleChangeTitle}
                 id="creator-page-title" />
-            <button type="submit">Create New Page</button>
+            <button type="submit">Create New Type</button>
         </form>
     )
 }
