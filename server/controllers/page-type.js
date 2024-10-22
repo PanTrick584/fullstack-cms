@@ -8,6 +8,7 @@ const getAllPageTypes = async (req, res) => {
     // return res.status(201).json({ data: "secret data not for you" })
     // res.status(201).json({ data: req.body })
     const pageTypes = await PageType.find({ createdBy: type }).sort('createdAt')
+    console.log(pageTypes);
     res.status(201).json({ pageTypes, count: pageTypes.length })
     // console.log("basic request");
 }
