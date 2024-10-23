@@ -9,6 +9,7 @@ const path = require('path');
 const dataRoute = require("./routes/data"); // API routes
 const adminRoute = require("./routes/admin"); // API routes
 const pageTypeRoute = require("./routes/page-type");
+const pageStructureRoute = require("./routes/page-structure");
 
 const connectDB = require("./db/connect");
 
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, '../dist')));
 app.use('/api/v1/data', dataRoute);
 app.use('/admin', adminRoute);
 app.use('/page-type', pageTypeRoute);
+// app.use('/page-structure', pageStructureRoute);
 // Serve React's index.html for all other routes (catch-all)
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'client', 'build', '../dist', 'index.html'));

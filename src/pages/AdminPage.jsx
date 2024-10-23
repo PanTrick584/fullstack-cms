@@ -113,6 +113,7 @@ const AdminPage = () => {
 
             <div className="build-page">
                 {pageType && pageType.data.title}
+                {pageType && pageType.data.id}
                 {pageType &&
                     <div className="build-page-sections">
                         <button>add new section + </button>
