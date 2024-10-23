@@ -13,6 +13,8 @@ const AdminPage = () => {
     const [adminData, setAdminData] = useState(null);
     const [showPageTypes, setShowPageTypes] = useState([]);
     const [addNewPage, setAddNewPage] = useState(false);
+    const [newSection, setNewSection] = useState(false);
+    const [sectionsList, setSectionsList] = useState([]);
 
     const [pageType, setPageType] = useState(null)
 
@@ -113,9 +115,22 @@ const AdminPage = () => {
 
             <div className="build-page">
                 {pageType && pageType.data.title}
+                {sectionsList.length && <div>{sectionsList.map((item) => <p>{item}</p>)}</div>}
                 {pageType &&
                     <div className="build-page-sections">
-                        <button>add new section + </button>
+                        <button onClick={() => setNewSection(true)}>add new section +</button>
+                        {newSection &&
+                            <div className="sections-box">
+                                {sections.map((sec, id) => {
+                                    return(
+                                        <div className="" key={`sec-${id}`}>
+                                            <h3>{sec}</h3>
+                                            <button onClick={() => setSectionsList(prev => [...prev, sec])}>add +</button>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            }
                     </div>
                 }
             </div>
