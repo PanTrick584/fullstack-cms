@@ -9,6 +9,12 @@ const PageSchema = new mongoose.Schema({
     type: {
         type: String,
         required: [true, "Please select destiny of site"]
+    },
+    path: {
+        type: String
+    },
+    component: {
+        type: String
     }
 }, { timestamps: true })
 

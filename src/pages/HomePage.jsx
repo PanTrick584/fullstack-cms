@@ -10,20 +10,24 @@ const HomePage = () => {
     const builDatadPath = "/api/v1/data"
     const devDataPath = "http://localhost:5000" + builDatadPath;
     const { userData } = useContext(AppContext);
+    const pageStructurePath = `http://localhost:5000/page-structure?main=true`;
+    const [mainPage, setMainPage] = useState(null)
 
     useEffect(() => {
-        fetchData();
+        fetchData(pageStructurePath, setMainPage);
     }, []);
 
-    const fetchData = async () => {
+    const fetchData = async (path, setter) => {
         try {
-            await handleData(devDataPath, setData);
+            await handleData(path, setter);
         } catch (error) {
             console.log(error);
         } finally {
             setLoading(false)
         }
     };
+
+    console.log(mainPage);
 
     if (loading) return <div>Loading...</div>
 
@@ -35,7 +39,19 @@ const HomePage = () => {
                 </Link>
             </nav>
             <div>
-                <h1>{data?.map((item, id) => <p key={`home-page-header-${id}`}>{item.section}</p>)}</h1>
+                <h1>{mainPage?.map((item, id) => {
+                    return (
+                        <div className="">
+                            {item.structure.map((structure) => {
+                                return (
+                                    <div className="">
+                                        {structure}
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    )
+                })}</h1>
             </div>
 
         </>

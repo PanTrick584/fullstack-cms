@@ -2,8 +2,12 @@ const mongoose = require("mongoose");
 
 const PageStructureSchema = new mongoose.Schema({
     structure: {
-        type: Array,
+        type: [String],
         required: [true, "Please provide title"]
+    },
+    isActiveRevision: {
+        type: Boolean,
+        required: true
     },
     createdBy: {
         type: mongoose.Types.ObjectId,

@@ -7,6 +7,8 @@ const AddPageForm = ({ setPages, addPage }) => {
     const [formData, setFormData] = useState({
         title: "",
         type: "",
+        path: "",
+        component: ""
     });
     const buildAdminPath = "/admin"
     const devAdminPath = "http://localhost:5000" + buildAdminPath
@@ -34,6 +36,22 @@ const AddPageForm = ({ setPages, addPage }) => {
         setFormData((prevData) => ({
             ...prevData,
             title: value
+        }))
+    }
+
+    const handleChangePath = (e) => {
+        const { value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            path: value
+        }))
+    }
+
+    const handleChangeComponent = (e) => {
+        const { value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            component: value
         }))
     }
 
@@ -73,6 +91,18 @@ const AddPageForm = ({ setPages, addPage }) => {
                 name='page-type-side'
                 value={"side"}
                 onClick={handleChangeType} />
+            <label htmlFor="page-path">Create Path</label>
+            <input
+                type="text"
+                name='page-path'
+                value={`/${formData.path}`}
+                onClick={handleChangePath} />
+            <label htmlFor="page-component">Specify component</label>
+            <input
+                type="text"
+                name='page-component'
+                value={formData.component}
+                onClick={handleChangeComponent} />
             <button type="submit">Create New Page</button>
         </form>
     )

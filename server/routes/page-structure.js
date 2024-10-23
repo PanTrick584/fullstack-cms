@@ -6,12 +6,14 @@ const {
     getStructure,
     createStructure,
     updateStructure,
+    updateActiveRevision,
     deleteStructure
 } = require("../controllers/page-structure");
 
 router
     .route('/')
     .get(getAllStructures)
+    .patch(updateActiveRevision)
     .post(createStructure);
 
 router
