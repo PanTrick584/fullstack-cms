@@ -15,6 +15,7 @@ const AdminPage = () => {
     const [addNewPage, setAddNewPage] = useState(false);
 
     const [pageType, setPageType] = useState(null)
+    const [pageStructure, setPageStructure] = useState([]);
 
     const buildAdminPath = "/admin"
     const devAdminPath = "http://localhost:5000" + buildAdminPath
@@ -116,7 +117,7 @@ const AdminPage = () => {
                 {pageType && pageType.data.id}
                 {pageType &&
                     <div className="build-page-sections">
-                        <button>add new section + </button>
+                        <button onClick={() => { }}>add new section + </button>
                     </div>
                 }
             </div>
