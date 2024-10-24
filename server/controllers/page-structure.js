@@ -37,13 +37,16 @@ const createStructure = async (req, res) => {
 }
 
 const updateActiveRevision = async (req, res) => {
-    const { parentPageId, itemId } = req.body;
+    const { parentPageId, parentTypeId, itemId } = req.body;
     // console.log(createdBy);
     // console.log(itemId);
-    await PageStructure.updateMany({ parentPageId }, { $set: { isActiveRevision: false } });
+    const updatedPages = await PageStructure.updateMany({ parentPageId }, { $set: { isActiveRevision: false } });
     const newActivePage = await PageStructure.findByIdAndUpdate(itemId, { $set: { isActiveRevision: true } })
-    console.log(newActivePage);
-    return res.status(200).json({ data: newActivePage })
+    // console.log(newActivePage);
+    // console.log(updatedPages);
+    // const pageStructures = updatedPages.filter((page, id) => page._id !== newActivePage._id)
+    const pageStructures = await PageStructure.find({ parentTypeId }).sort('createdAt')
+    return res.status(200).json({ data: pageStructures })
 }
 
 const updateStructure = async (req, res) => {

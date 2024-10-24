@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { handleData } from "../handlers/handlers";
 // import fetchData
 
-const AddPageForm = ({ setPages, addPage }) => {
+const PageForm = ({ setPages, addPage }) => {
     const [newPage, setNewPage] = useState(null);
     const [formData, setFormData] = useState({
         title: "",
@@ -62,8 +62,6 @@ const AddPageForm = ({ setPages, addPage }) => {
         }))
     }
 
-    // console.log(newPage);
-    // console.log(formData);
     return (
         <form onSubmit={(e) => {
             if (!formData.title || !formData.destination) return;
@@ -72,7 +70,6 @@ const AddPageForm = ({ setPages, addPage }) => {
 
             console.log(formData);
             fetchData(devAdminPath, setNewPage, { method: "POST", body: JSON.stringify(formData) })
-            // setLoading(true)
         }}>
             <label htmlFor="page-title"></label>
             <input
@@ -94,15 +91,15 @@ const AddPageForm = ({ setPages, addPage }) => {
                 value={"side"}
                 onClick={handleChangeDestination} />
             {formData.destination === 'side' &&
-            <>
-            <label htmlFor="page-path">Create Path</label>
-                <input
-                    type="text"
-                    name='page-path'
-                    value={formData.path}
-                    onChange={handleChangePath} />
-            </>
-                
+                <>
+                    <label htmlFor="page-path">Create Path</label>
+                    <input
+                        type="text"
+                        name='page-path'
+                        value={formData.path}
+                        onChange={handleChangePath} />
+                </>
+
             }
             <label htmlFor="page-component">Specify component</label>
             <input
@@ -115,4 +112,4 @@ const AddPageForm = ({ setPages, addPage }) => {
     )
 }
 
-export default AddPageForm;
+export default PageForm;
