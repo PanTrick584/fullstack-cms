@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { handleData } from "../handlers/handlers";
 
-const PageTypeForm = ({ pageData, setTypes }) => {
+const PageTypeForm = ({ pageId, pageDestination, setTypes, pagePath }) => {
     const [newType, setNewType] = useState(null);
     const [formData, setFormData] = useState({
         title: "",
-        id: String(pageData),
+        destination: String(pageDestination),
+        parentPageId: String(pageId),
+        path: pagePath
     });
+
+    const [hideForm, setHideForm] = useState(false)
 
     useEffect(() => {
         if (!newType) return;
@@ -33,28 +37,34 @@ const PageTypeForm = ({ pageData, setTypes }) => {
         }))
     }
 
-    console.log(newType);
-    console.log(pageData);
-    console.log(typeof pageData);
+    // console.log(pageType);
+    // console.log(pageData);
+    // console.log(typeof pageData);
 
     return (
-        <form onSubmit={(e) => {
-            if (!formData.title || !formData.id) return;
-
-            console.log(formData.title);
-            console.log(formData.id);
-            e.preventDefault();
-            fetchData(pageTypePath, setNewType, { method: "POST", body: JSON.stringify(formData) })
-        }}>
-            <label htmlFor="page-title">Insert Page Type Title</label>
-            <input
-                type="text"
-                name="page-title"
-                value={formData.title}
-                onChange={handleChangeTitle}
-                id="creator-page-title" />
-            <button type="submit">Create New Type</button>
-        </form>
+        <>
+            {!hideForm &&
+                <form onSubmit={(e) => {
+                    console.log(formData);
+                    if (!formData.title || !formData.parentPageId) return;
+        
+                    console.log(formData.title);
+                    console.log(formData.id);
+                    e.preventDefault();
+                    fetchData(pageTypePath, setNewType, { method: "POST", body: JSON.stringify(formData) })
+                    setHideForm(true)
+                }}>
+                    <label htmlFor="page-title">Insert Page Type Title</label>
+                    <input
+                        type="text"
+                        name="page-title"
+                        value={formData.title}
+                        onChange={handleChangeTitle}
+                        id="creator-page-title" />
+                    <button type="submit">Create New Type</button>
+                </form>
+            }
+        </>
     )
 }
 

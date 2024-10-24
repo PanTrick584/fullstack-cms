@@ -6,10 +6,17 @@ const PageTypeSchema = new mongoose.Schema({
         required: [true, "Please provide title"],
         maxlength: 30
     },
-    createdBy: {
+    destination: {
+        type: String,
+        required: [true, "Please select destiny of site"]
+    },
+    parentPageId: {
         type: mongoose.Types.ObjectId,
         ref: "Page",
         required: true
+    },
+    path: {
+        type: String
     }
 }, { timestamps: true }
 )

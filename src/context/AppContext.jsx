@@ -4,6 +4,10 @@ export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
     const [userData, setUserData] = useState("siema");
+    const [pagesList, setPagesList] = useState([]);
+    const [pageType, setPageType] = useState(null)
+
+
     const [loadings, setLoadings] = useState({
         adminPageLIst: true
     })
@@ -14,7 +18,11 @@ export const AppProvider = ({ children }) => {
                 userData,
                 setUserData,
                 loadings,
-                setLoadings
+                setLoadings,
+                pagesList,
+                setPagesList,
+                pageType,
+                setPageType
             }}>
             {children}
         </AppContext.Provider>

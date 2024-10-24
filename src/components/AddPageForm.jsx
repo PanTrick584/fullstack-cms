@@ -6,7 +6,7 @@ const AddPageForm = ({ setPages, addPage }) => {
     const [newPage, setNewPage] = useState(null);
     const [formData, setFormData] = useState({
         title: "",
-        type: "",
+        destination: "",
         path: "",
         component: ""
     });
@@ -18,7 +18,6 @@ const AddPageForm = ({ setPages, addPage }) => {
         console.log(newPage);
         setPages(prev => [...prev, newPage])
         addPage(false)
-        // console.log(pagesList);
     }, [newPage])
 
     const fetchData = async (path, setter, body = {}) => {
@@ -55,20 +54,23 @@ const AddPageForm = ({ setPages, addPage }) => {
         }))
     }
 
-    const handleChangeType = (e) => {
+    const handleChangeDestination = (e) => {
         const { value } = e.target;
         setFormData((prevData) => ({
             ...prevData,
-            type: value
+            destination: value
         }))
     }
 
+    // console.log(newPage);
+    // console.log(formData);
     return (
         <form onSubmit={(e) => {
-            if (!formData.title || !formData.type) return;
+            if (!formData.title || !formData.destination) return;
 
             e.preventDefault();
 
+            console.log(formData);
             fetchData(devAdminPath, setNewPage, { method: "POST", body: JSON.stringify(formData) })
             // setLoading(true)
         }}>
@@ -84,19 +86,24 @@ const AddPageForm = ({ setPages, addPage }) => {
                 type="checkbox"
                 name='page-type-main'
                 value={"main"}
-                onClick={handleChangeType} />
+                onClick={handleChangeDestination} />
             <label htmlFor="page-type-side">Side Page</label>
             <input
                 type="checkbox"
                 name='page-type-side'
                 value={"side"}
-                onClick={handleChangeType} />
+                onClick={handleChangeDestination} />
+            {formData.destination === 'side' &&
+            <>
             <label htmlFor="page-path">Create Path</label>
-            <input
-                type="text"
-                name='page-path'
-                value={`/${formData.path}`}
-                onClick={handleChangePath} />
+                <input
+                    type="text"
+                    name='page-path'
+                    value={formData.path}
+                    onChange={handleChangePath} />
+            </>
+                
+            }
             <label htmlFor="page-component">Specify component</label>
             <input
                 type="text"

@@ -5,14 +5,26 @@ const PageStructureSchema = new mongoose.Schema({
         type: [String],
         required: [true, "Please provide title"]
     },
+    destination: {
+        type: String,
+        required: [true, "Please select destiny of structure"]
+    },
     isActiveRevision: {
         type: Boolean,
         required: true
     },
-    createdBy: {
+    parentTypeId: {
         type: mongoose.Types.ObjectId,
         ref: "PageType",
         required: true
+    },
+    parentPageId: {
+        type: mongoose.Types.ObjectId,
+        ref: "Page",
+        required: true
+    },
+    path: {
+        type: String
     }
 }, { timestamps: true }
 )

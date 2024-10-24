@@ -6,7 +6,7 @@ const PageSchema = new mongoose.Schema({
         required: [true, "Please provide title for Page"],
         maxlength: 30
     },
-    type: {
+    destination: {
         type: String,
         required: [true, "Please select destiny of site"]
     },

@@ -1,8 +1,8 @@
 const PageType = require("../models/PageType");
 
 const getAllPageTypes = async (req, res) => {
-    const { type } = req.query;
-    const pageTypes = await PageType.find({ createdBy: type }).sort('createdAt')
+    const { pageId } = req.query;
+    const pageTypes = await PageType.find({ parentPageId: pageId }).sort('createdAt')
     res.status(201).json({ data: pageTypes, count: pageTypes.length })
 }
 
@@ -12,12 +12,10 @@ const getPageType = async (req, res) => {
 
 const createPageType = async (req, res) => {
     console.log(req.body);
-    // res.status(201).json({ data: req.body })
-    const { title, id } = req.body;
-    const pageType = await PageType.create({ title: title, createdBy: id })
+    const { title, destination, parentPageId, path } = req.body;
+    const pageType = await PageType.create({ title, parentPageId, destination, path })
 
     console.log(pageType);
-    // if (!pageType) return;
     res.status(201).json({ data: pageType })
 }
 

@@ -4,6 +4,7 @@ import './App.css'
 import HomePage from './pages/HomePage';
 import AdminPage from './pages/AdminPage';
 import BuildPage from './pages/BuildPage';
+import AboutPage from './pages/AboutPage';
 
 function App() {
     return (
@@ -11,8 +12,9 @@ function App() {
             <Router>
                 <Routes>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/about" element={<AboutPage />} />
                     <Route path="/admin" element={<AdminPage />} />
-                    <Route path="/admin/build-page" element={<BuildPage />} />
+                    {/* <Route path="/admin/build-page" element={<BuildPage />} /> */}
                 </Routes>
             </Router>
         </AppProvider>

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { handleData } from '../handlers/handlers'
 import PageTypeForm from './PageTypeForm'
+import { AppContext, AppProvider } from '../context/AppContext';
 
 
 const PageTypes = ({ data, setType, setTypeStructures }) => {
@@ -9,7 +10,8 @@ const PageTypes = ({ data, setType, setTypeStructures }) => {
     const [loading, setLoading] = useState(true)
     const [clickedType, setClickedType] = useState();
 
-    const pageTypePath = `http://localhost:5000/page-type?type=${data._id}`;
+    const pageTypePath = `http://localhost:5000/page-type?pageId=${data._id}`;
+    const { pageType, setPageType } = useContext(AppContext);
 
 
     useEffect(() => {
@@ -21,6 +23,9 @@ const PageTypes = ({ data, setType, setTypeStructures }) => {
         setType(clickedType)
     }, [clickedType])
 
+    useEffect(() => {
+        setShowForm(false)
+    }, [typesData])
     // const pageTypePath = devAdminPath + '?type=pageType'
     // console.log(data);
 
@@ -39,7 +44,7 @@ const PageTypes = ({ data, setType, setTypeStructures }) => {
     };
 
     const handlePageTypeData = (item, id) => {
-        const pageStructurePath = `http://localhost:5000/page-structure?type=${item._id}`;
+        const pageStructurePath = `http://localhost:5000/page-structure?parentTypeId=${item._id}`;
         setClickedType({ id, data: item })
         fetchData(pageStructurePath, setTypeStructures)
     }
@@ -51,15 +56,15 @@ const PageTypes = ({ data, setType, setTypeStructures }) => {
         <div className='page-type'>
 
             {!loading ? typesData.length ? typesData.map((item, id) => {
-                return (<div className="">
+                return (<div className="" key={`page-type${id}`}>
                     <p>Page type: {item.title}</p>
-                    <button onClick={() => handlePageTypeData(item, id)}>create page type structure +</button>
+                    <button onClick={() => handlePageTypeData(item, id)}>create structure or modify</button>
                 </div>)
             }) : "There are no page types, click button to create..." : "Loading..."}
             {!showForm && <button onClick={() => setShowForm(true)}>add new type</button>}
-            {showForm && <PageTypeForm pageData={data._id} setTypes={setTypesData} />}
+            {showForm && <PageTypeForm pageId={data._id} pageDestination={data.destination} pagePath={data.path} setTypes={setTypesData} />}
         </div>
     )
 }
 
-export default PageTypes
+export default PageTypes;
