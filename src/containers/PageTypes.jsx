@@ -13,12 +13,14 @@ const PageTypes = ({ data }) => {
 
     const {
         setPageType,
-        setPageRevisions
+        setPageRevisions,
+        typesList,
+        setTypesList,
     } = useContext(AppContext);
 
 
     useEffect(() => {
-        fetchData(pageTypePath, setTypesData)
+        fetchData(pageTypePath, setTypesList)
         setLoading(false)
     }, [])
 
@@ -28,7 +30,7 @@ const PageTypes = ({ data }) => {
 
     useEffect(() => {
         setShowForm(false)
-    }, [typesData])
+    }, [typesList])
 
     const handlePageTypeData = (item, id) => {
         const pageStructurePath = `http://localhost:5000/page-structure?parentTypeId=${item._id}`;
@@ -40,8 +42,8 @@ const PageTypes = ({ data }) => {
         <div className='page-type'>
             {
                 !loading ?
-                    typesData.length ?
-                        typesData.map((item, id) => {
+                    typesList.length ?
+                        typesList.map((item, id) => {
                             return (
                                 <div
                                     className=""
@@ -66,7 +68,7 @@ const PageTypes = ({ data }) => {
                     pageId={data._id}
                     pageDestination={data.destination}
                     pagePath={data.path}
-                    setTypes={setTypesData} />
+                    setTypes={setTypesList} />
             }
         </div>
     )

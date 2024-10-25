@@ -51,7 +51,6 @@ const AdminPage = () => {
             </Link>
             {/* Created Pages */}
             <Pages />
-
             {
                 !addNewPage &&
                 <button
@@ -69,7 +68,6 @@ const AdminPage = () => {
                         addPage={setAddNewPage}
                     />
                 </div>}
-
             <PageBuild />
         </div>
     )

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext';
 import { fetchData } from '../handlers/handlers';
 
@@ -15,10 +15,18 @@ const PageBuild = () => {
         newActive,
         setNewActive,
         pageRevisions,
-        setPageRevisions,
-        showStructure,
-        setShowStructure
+        setPageRevisions
     } = useContext(AppContext);
+    const [showStructure, setShowStructure] = useState([]);
+
+
+    useEffect(() => {
+        console.log("hop hop");
+        setShowStructure(() => pageRevisions.map((_, id) => ({ id, status: false })))
+    }, [pageRevisions, setNewActive])
+    console.log(showStructure);
+    // console.log(pageRevisions);
+    // console.log(pageStructure);
 
     const sections = [
         "slider",
@@ -61,8 +69,15 @@ const PageBuild = () => {
         // fetchData(pageStructurePath, setTypeStructures)
     }
 
+    const handleModifyRevision = (prev, id) => {
+        const updatePage = prev.map((item, itemId) => {
+            if (itemId === id) return ({ id, status: true });
+            return item;
+        });
+        return updatePage;
+    }
 
-    console.log(pageType);
+    // console.log(pageType);
     return (
         <div className="build-page">
             {pageType && <h2>BUILD PAGE</h2>}
@@ -103,8 +118,8 @@ const PageBuild = () => {
                                         }
                                         {pageType &&
                                             <div className="build-page-sections">
-                                                {!showStructure && <button onClick={() => setShowStructure(true)}>add new section + </button>} {/*update*/}
-                                                {showStructure &&
+                                                {!showStructure.length || !showStructure[id].status && <button onClick={() => setShowStructure(prev => handleModifyRevision(prev, id))}>add new section + </button>} {/*update*/}
+                                                {showStructure.length === 0 || showStructure[id].status &&
                                                     sections.map((item, id) => {
                                                         return (
                                                             <div className="" key={`structure-${item}-${id}`}>
@@ -142,8 +157,8 @@ const PageBuild = () => {
                                 })}
                             </div>}
                         <div className="build-page-sections">
-                            {!showStructure && <button onClick={() => setShowStructure(true)}>create section + </button>} {/*update*/}
-                            {showStructure &&
+                            {!showStructure.length && <button onClick={() => setShowStructure(prev => [...prev, {id, status: true}])}>create section + </button>} {/*update*/}
+                            {showStructure.length &&
                                 sections.map((item, id) => {
                                     return (
                                         <div className="" key={`structure-${item}-${id}`}>

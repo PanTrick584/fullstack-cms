@@ -4,17 +4,19 @@ export const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
     const [pagesList, setPagesList] = useState([]);
+    const [typesList, setTypesList] = useState([]);
     const [pageType, setPageType] = useState(null)
     const [typeStructures, setTypeStructures] = useState([])
     const [newActive, setNewActive] = useState(null);
     const [pageRevisions, setPageRevisions] = useState([]);
-    const [showStructure, setShowStructure] = useState(false);
+    const [showStructure, setShowStructure] = useState([]);
 
-    // useEffect(() => {
-    //     setShowPageTypes(() => pagesList.map((_, id) => ({ id, status: false })))
-    // }, [pagesList])
-    // console.log(typeStructures);
-    // console.log(pageStructure);
+    useEffect(() => {
+        setShowStructure(() => pageRevisions.map((_, id) => ({ id, status: false })))
+    }, [])
+
+    // console.log(pageRevisions);
+    // console.log(showStructure);
 
     const [loadings, setLoadings] = useState({
         adminPageLIst: true
@@ -27,6 +29,8 @@ export const AppProvider = ({ children }) => {
                 setLoadings,
                 pagesList,
                 setPagesList,
+                typesList,
+                setTypesList,
                 pageType,
                 setPageType,
                 typeStructures,
@@ -34,9 +38,7 @@ export const AppProvider = ({ children }) => {
                 newActive,
                 setNewActive,
                 pageRevisions,
-                setPageRevisions,
-                showStructure,
-                setShowStructure
+                setPageRevisions
             }}>
             {children}
         </AppContext.Provider>
