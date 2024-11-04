@@ -67,7 +67,8 @@ const AdminPage = () => {
                         setPages={setPagesList}
                         addPage={setAddNewPage}
                     />
-                </div>}
+                </div>
+            }
             <PageBuild />
         </div>
     )
